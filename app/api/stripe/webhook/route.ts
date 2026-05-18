@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { getStripe } from "@/app/lib/stripe";
 import { sendBeatDeliveryEmail } from "@/app/lib/resend";
 import { promises as fs } from "fs";
@@ -41,6 +42,7 @@ async function markPaymentProcessed(sessionId: string) {
 }
 
 export async function POST(request: NextRequest) {
+  console.log(`[webhook] POST /api/stripe/webhook received`);
   try {
     const body = await request.text();
     const signature = request.headers.get("stripe-signature");
@@ -73,15 +75,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(`[webhook] event received: ${event.type}`);
+
     // Handle checkout.session.completed event
     if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
+      const session = event.data.object as Stripe.Checkout.Session;
 
       // Prevent duplicate processing
       if (await isPaymentProcessed(session.id)) {
         console.log(`Payment ${session.id} already processed, skipping`);
         return NextResponse.json({ received: true });
       }
+
+      console.log("[webhook] session.metadata:", JSON.stringify(session.metadata));
 
       const customerId = session.customer_details?.email;
       const beatTitle = session.metadata?.beatTitle;
@@ -103,6 +109,9 @@ export async function POST(request: NextRequest) {
         });
       }
 
+      const amountTotal = session.amount_total ?? 0;
+      const currency = session.currency ?? "usd";
+
       // Send delivery email
       try {
         const emailResult = await sendBeatDeliveryEmail({
@@ -110,6 +119,8 @@ export async function POST(request: NextRequest) {
           beatTitle,
           licenseName,
           beatId,
+          amountTotal,
+          currency,
         });
 
         console.log("Email delivery result:", emailResult);
@@ -120,16 +131,16 @@ export async function POST(request: NextRequest) {
 
       // Mark payment as processed
       await markPaymentProcessed(session.id);
+      console.log(`[webhook] session ${session.id} processed successfully`);
     }
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error("Webhook error:", error);
-    return NextResponse.json(
-      {
-        error: error instanceof Error ? error.message : "Webhook processing failed",
-      },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : String(error);
+    const stack = error instanceof Error ? error.stack : undefined;
+    console.error("[webhook] UNHANDLED ERROR");
+    console.error("[webhook] message:", message);
+    console.error("[webhook] stack:", stack);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
