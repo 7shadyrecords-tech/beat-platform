@@ -60,7 +60,7 @@ export const beats: Beat[] = [
     genre: "Trap",
     price: 59,
     previewUrl: "/beats/audio/dope-machine.mp3",
-    coverImage: "/beats/covers/03.svg",
+    coverImage: "/beats/covers/03-dope-machine.jpg",
     tag: "TRENDING",
     tags: ["Energetic", "Club", "Hard"],
     featured: true,
