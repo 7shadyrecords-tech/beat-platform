@@ -62,6 +62,7 @@ export async function POST(request: Request) {
         beatTitle: beat.title,
         licenseId: license.id,
         licenseName: license.name,
+        ...(beat.audioFile ? { audioFile: beat.audioFile } : {}),
       },
       success_url: `${siteUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout/cancel`,

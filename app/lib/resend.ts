@@ -19,6 +19,7 @@ export type EmailPayload = {
   licenseName: string;
   licenseId: string;
   beatId: string;
+  audioFile?: string;
   amountTotal: number;
   currency: string;
 };
@@ -36,6 +37,7 @@ export async function sendBeatDeliveryEmail({
   licenseName,
   licenseId,
   beatId,
+  audioFile,
   amountTotal,
   currency,
 }: EmailPayload): Promise<{ success: boolean; messageId?: string; error?: string }> {
@@ -46,8 +48,8 @@ export async function sendBeatDeliveryEmail({
       return { success: false, error: "Resend API key not configured" };
     }
 
-    const beatToken = createDownloadToken(beatId, to, "beat", licenseId);
-    const licenseToken = createDownloadToken(beatId, to, "license", licenseId);
+    const beatToken = createDownloadToken(beatId, to, "beat", licenseId, audioFile);
+    const licenseToken = createDownloadToken(beatId, to, "license", licenseId, audioFile);
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const beatDownloadUrl = `${siteUrl}/api/download/${beatToken}`;

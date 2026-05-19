@@ -13,6 +13,7 @@ export type Beat = {
   featured?: boolean;
   plays?: number;
   trending?: number;
+  audioFile?: string; // filename in storage/beats/ — defaults to {id}.mp3
 };
 
 export const beats: Beat[] = [

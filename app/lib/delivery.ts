@@ -8,6 +8,7 @@ export type DownloadToken = {
   fileType: "beat" | "license";
   licenseId: string;
   expiresAt: number;
+  audioFile?: string;
 };
 
 const TOKEN_EXPIRES_IN_MS = 24 * 60 * 60 * 1000;
@@ -26,13 +27,15 @@ export function createDownloadToken(
   beatId: string,
   email: string,
   fileType: "beat" | "license",
-  licenseId: string
+  licenseId: string,
+  audioFile?: string
 ): string {
   const payload = b64url(JSON.stringify({
     beatId,
     email,
     fileType,
     licenseId,
+    audioFile,
     expiresAt: Date.now() + TOKEN_EXPIRES_IN_MS,
   }));
   const sig = crypto.createHmac("sha256", getSecret()).update(payload).digest("hex");
@@ -66,9 +69,10 @@ const LICENSE_FILES: Record<string, string> = {
   "test": "mp3-lease.pdf",
 };
 
-export async function getBeatFile(beatId: string): Promise<Buffer | null> {
+export async function getBeatFile(beatId: string, audioFile?: string): Promise<Buffer | null> {
   try {
-    return await fs.readFile(path.join(process.cwd(), `storage/beats/${beatId}.mp3`));
+    const filename = audioFile ?? `${beatId}.mp3`;
+    return await fs.readFile(path.join(process.cwd(), `storage/beats/${filename}`));
   } catch {
     return null;
   }

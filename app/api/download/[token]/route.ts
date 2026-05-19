@@ -29,7 +29,7 @@ export async function GET(
     let contentType: string = "";
 
     if (tokenData.fileType === "beat") {
-      fileBuffer = await getBeatFile(tokenData.beatId);
+      fileBuffer = await getBeatFile(tokenData.beatId, tokenData.audioFile);
       fileName = `beat-${tokenData.beatId}.mp3`;
       contentType = "audio/mpeg";
     } else if (tokenData.fileType === "license") {

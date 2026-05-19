@@ -51,6 +51,7 @@ export async function POST(request: NextRequest) {
       const beatId = session.metadata?.beatId;
       const licenseName = session.metadata?.licenseName;
       const licenseId = session.metadata?.licenseId;
+      const audioFile = session.metadata?.audioFile || undefined;
 
       if (!customerEmail || !beatTitle || !beatId || !licenseName || !licenseId) {
         console.error("[webhook] Missing required metadata:", {
@@ -73,6 +74,7 @@ export async function POST(request: NextRequest) {
           licenseName,
           licenseId,
           beatId,
+          audioFile,
           amountTotal,
           currency,
         });
