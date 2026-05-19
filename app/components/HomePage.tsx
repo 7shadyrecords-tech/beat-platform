@@ -15,6 +15,7 @@ import { PremiumHero } from "./PremiumHero";
 import { ProducerAnalytics } from "./ProducerAnalytics";
 import { Testimonials } from "./Testimonials";
 import { TrendingCarousel } from "./TrendingCarousel";
+import { CollaborationsSection } from "./CollaborationsSection";
 
 export function HomePage() {
   return (
@@ -31,6 +32,7 @@ export function HomePage() {
         transition={{ duration: 0.6 }}
       >
         <PremiumHero />
+        <CollaborationsSection />
         <FeaturedBeats />
         <div id="trending">
           <TrendingCarousel />
