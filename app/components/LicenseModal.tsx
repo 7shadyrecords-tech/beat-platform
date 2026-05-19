@@ -18,6 +18,7 @@ export function LicenseModal() {
   const [selectedLicense, setSelectedLicense] = useState<LicenseId>("mp3-lease");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [refundAccepted, setRefundAccepted] = useState(false);
 
   const activeLicense = licenses.find((l) => l.id === selectedLicense)!;
 
@@ -118,6 +119,27 @@ export function LicenseModal() {
                 ))}
               </div>
 
+              <label className="mt-5 sm:mt-6 flex cursor-pointer items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3 sm:p-4 hover:border-white/20 transition-colors">
+                <input
+                  type="checkbox"
+                  checked={refundAccepted}
+                  onChange={(e) => setRefundAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-orange-500"
+                />
+                <span className="text-[10px] sm:text-xs leading-relaxed text-muted">
+                  {labels.licenseModal.refundNotice}{" "}
+                  <a
+                    href="/legal/cgv"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-neon underline underline-offset-2 hover:text-neon-bright"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {labels.licenseModal.cgvLink}
+                  </a>
+                </span>
+              </label>
+
               {error && (
                 <p className="mt-4 rounded-xl border border-neon-red/30 bg-neon-red/10 px-4 py-3 text-xs sm:text-sm text-neon-red">
                   {error}
@@ -127,8 +149,8 @@ export function LicenseModal() {
               <button
                 type="button"
                 onClick={handleCheckout}
-                disabled={loading}
-                className="mt-5 sm:mt-6 w-full rounded-xl bg-gradient-to-r from-neon via-neon-bright to-neon-red py-3 sm:py-4 font-display text-xs sm:text-sm font-bold tracking-widest text-black transition-all hover:scale-[1.01] disabled:opacity-60 neon-glow-strong min-h-11 sm:min-h-12"
+                disabled={loading || !refundAccepted}
+                className="mt-5 sm:mt-6 w-full rounded-xl bg-gradient-to-r from-neon via-neon-bright to-neon-red py-3 sm:py-4 font-display text-xs sm:text-sm font-bold tracking-widest text-black transition-all hover:scale-[1.01] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 neon-glow-strong min-h-11 sm:min-h-12"
               >
                 {loading
                   ? labels.licenseModal.redirecting

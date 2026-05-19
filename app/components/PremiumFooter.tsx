@@ -57,6 +57,7 @@ export function PremiumFooter() {
               <ul className="mt-3 sm:mt-4 space-y-2 text-xs sm:text-sm text-muted">
                 <li><a href="#" className="hover:text-foreground transition-colors">{f.licensing}</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">{f.terms}</a></li>
+                <li><a href="/legal/cgv" className="hover:text-foreground transition-colors">{f.cgv}</a></li>
                 <li><a href="#" className="hover:text-foreground transition-colors">{f.privacy}</a></li>
               </ul>
             </div>
