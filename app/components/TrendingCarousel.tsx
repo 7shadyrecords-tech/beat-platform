@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { trendingBeats } from "../data/beats";
 import { usePlayer } from "../context/PlayerContext";
+import { useLanguage } from "@/app/hooks/useLanguage";
 import { SectionReveal } from "./ui/SectionReveal";
 
 function formatPlays(n: number) {
@@ -13,6 +14,8 @@ function formatPlays(n: number) {
 
 export function TrendingCarousel() {
   const { playBeat, currentBeat, isPlaying } = usePlayer();
+  const { labels } = useLanguage();
+  const tr = labels.trending;
   const doubled = [...trendingBeats, ...trendingBeats];
 
   return (
@@ -20,9 +23,9 @@ export function TrendingCarousel() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 flex items-end justify-between">
           <motion.div>
-            <p className="label-mono text-neon-red">Trending now</p>
+            <p className="label-mono text-neon-red">{tr.label}</p>
             <h2 className="heading-luxury mt-2 text-3xl md:text-4xl">
-              Chart <span className="neon-text">breakers</span>
+              {tr.title} <span className="neon-text">{tr.titleHighlight}</span>
             </h2>
           </motion.div>
         </div>
