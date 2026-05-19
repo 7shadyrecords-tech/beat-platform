@@ -58,7 +58,7 @@ export async function sendBeatDeliveryEmail({
 
     const htmlContent = `
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,34 +91,34 @@ export async function sendBeatDeliveryEmail({
   <div class="container">
     <div class="header">
       <div class="logo">BEAT<span>PLATFORM</span></div>
-      <div class="badge">Purchase confirmed</div>
-      <div class="heading">Your files are ready</div>
-      <p class="subheading">Thank you for your purchase. Download your files below before the links expire.</p>
+      <div class="badge">Achat confirmé</div>
+      <div class="heading">Vos fichiers sont prêts</div>
+      <p class="subheading">Merci pour votre achat. Téléchargez vos fichiers ci-dessous avant l'expiration des liens.</p>
     </div>
 
     <div class="card">
-      <div class="card-label">Order summary</div>
+      <div class="card-label">Récapitulatif de commande</div>
       <div class="beat-row">
         <div>
           <div class="beat-name">${beatTitle}</div>
-          <div class="beat-license">${licenseName} license</div>
+          <div class="beat-license">Licence ${licenseName}</div>
         </div>
         <div class="beat-price">${price}</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-label">Downloads</div>
-      <a href="${beatDownloadUrl}" class="btn btn-primary">Download beat (MP3)</a>
-      <a href="${licenseDownloadUrl}" class="btn btn-secondary">Download license (PDF)</a>
+      <div class="card-label">Téléchargements</div>
+      <a href="${beatDownloadUrl}" class="btn btn-primary">Télécharger le beat (MP3)</a>
+      <a href="${licenseDownloadUrl}" class="btn btn-secondary">Télécharger la licence (PDF)</a>
       <hr class="divider" />
       <div class="notice">
-        <strong>Links expire in 24 hours.</strong> Save your files immediately. If a link expires, reply to this email to request a new one.
+        <strong>Les liens expirent dans 24 heures.</strong> Enregistrez vos fichiers immédiatement. Si un lien expire, répondez à cet e-mail pour en obtenir un nouveau.
       </div>
     </div>
 
     <div class="footer">
-      <p>Questions? <a href="mailto:Zewone.music@gmail.com">Zewone.music@gmail.com</a></p>
+      <p>Des questions ? <a href="mailto:Zewone.music@gmail.com">Zewone.music@gmail.com</a></p>
       <p style="margin: 8px 0 0; color: #333;">&copy; ${new Date().getFullYear()} Beat Platform</p>
     </div>
   </div>
@@ -129,7 +129,7 @@ export async function sendBeatDeliveryEmail({
     const response = await emailClient.emails.send({
       from: "Beat Platform <no-reply@zewonebeats.com>",
       to,
-      subject: `Purchase confirmed – ${beatTitle}`,
+      subject: `Achat confirmé – ${beatTitle}`,
       html: htmlContent,
     });
 

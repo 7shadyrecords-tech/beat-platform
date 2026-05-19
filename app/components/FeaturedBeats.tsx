@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { featuredBeats } from "../data/beats";
 import { usePlayer } from "../context/PlayerContext";
+import { useLanguage } from "@/app/hooks/useLanguage";
 import { SectionReveal } from "./ui/SectionReveal";
 import { BuyNowButton } from "./BuyNowButton";
 
@@ -13,6 +14,9 @@ const CARD_BORDER = "#1e1e1e";
 
 export function FeaturedBeats() {
   const { currentBeat, isPlaying, playBeat } = usePlayer();
+  const { labels } = useLanguage();
+  const f = labels.featured;
+  const bt = labels.beatTags;
 
   const [hero, ...rest] = featuredBeats;
   const heroPlaying = currentBeat?.id === hero?.id && isPlaying;
@@ -24,15 +28,13 @@ export function FeaturedBeats() {
         <div className="mb-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="label-mono" style={{ color: ORANGE }}>
-              Curated selection
+              {f.label}
             </p>
             <h2 className="heading-luxury mt-2 text-3xl md:text-4xl">
-              Featured <span className="neon-text">beats</span>
+              {f.title} <span className="neon-text">{f.titleHighlight}</span>
             </h2>
           </div>
-          <p className="max-w-xs text-sm text-muted">
-            Hand-picked exclusives. Limited licenses available.
-          </p>
+          <p className="max-w-xs text-sm text-muted">{f.description}</p>
         </div>
 
         {/* Model C grid */}
@@ -66,7 +68,7 @@ export function FeaturedBeats() {
                 </span>
                 {/* Tag badge */}
                 <span className="glass absolute right-3 top-3 rounded-full px-3 py-1 label-mono text-neon">
-                  {hero.tag}
+                  {bt[hero.tag] ?? hero.tag}
                 </span>
               </div>
 
@@ -109,7 +111,7 @@ export function FeaturedBeats() {
                       onClick={() => playBeat(hero)}
                       className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-bold tracking-widest text-white transition-colors hover:border-white/30"
                     >
-                      {heroPlaying ? "PAUSE" : "PREVIEW"}
+                      {heroPlaying ? f.pause : f.preview}
                     </button>
                     <BuyNowButton
                       beat={hero}

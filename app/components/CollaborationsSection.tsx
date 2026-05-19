@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { SectionReveal } from "./ui/SectionReveal";
+import { useLanguage } from "@/app/hooks/useLanguage";
 
 const ACCENT = "#e05c20";
 
@@ -26,6 +27,8 @@ export function CollaborationsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(true);
+  const { labels } = useLanguage();
+  const cl = labels.collabs;
 
   const updateArrows = useCallback(() => {
     const el = trackRef.current;
@@ -48,10 +51,10 @@ export function CollaborationsSection() {
         <div className="mb-10 flex items-end justify-between">
           <div>
             <p className="label-mono" style={{ color: ACCENT }}>
-              Featured on
+              {cl.label}
             </p>
             <h2 className="heading-luxury mt-2 text-3xl md:text-4xl">
-              Collabo<span className="neon-text">rations</span>
+              {cl.title}<span className="neon-text">{cl.titleHighlight}</span>
             </h2>
           </div>
 
@@ -127,7 +130,7 @@ export function CollaborationsSection() {
                   style={{ color: ACCENT }}
                 >
                   {artist.tracks.length}{" "}
-                  {artist.tracks.length > 1 ? "morceaux" : "morceau"}
+                  {artist.tracks.length > 1 ? cl.tracks : cl.track}
                 </p>
 
                 {/* Track list */}

@@ -53,9 +53,9 @@ function SuccessContent() {
 
       {(beatTitle || licenseName) && (
         <div className="mt-6 rounded-2xl border border-neon/20 bg-neon/5 p-4">
-          <p className="label-mono text-neon/80">Your purchase</p>
+          <p className="label-mono text-neon/80">{labels.checkout.yourPurchase}</p>
           <p className="mt-2 font-display text-lg font-bold">{beatTitle}</p>
-          {licenseName && <p className="mt-1 text-xs text-muted">License: {licenseName}</p>}
+          {licenseName && <p className="mt-1 text-xs text-muted">{labels.checkout.license} : {licenseName}</p>}
         </div>
       )}
 
@@ -64,7 +64,7 @@ function SuccessContent() {
       </p>
 
       <div className="mt-2 rounded-lg border border-neon-red/20 bg-neon-red/5 p-3">
-        <p className="label-mono text-[11px] text-neon-red">Download links expire in 24 hours</p>
+        <p className="label-mono text-[11px] text-neon-red">{labels.checkout.expiry}</p>
       </div>
 
       <Link
@@ -83,7 +83,7 @@ export default function CheckoutSuccessPage() {
     <div className="relative min-h-screen">
       <AnimatedBackground />
       <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4">
-        <Suspense fallback={<div className="text-foreground">Loading...</div>}>
+        <Suspense fallback={<div className="text-foreground">Chargement...</div>}>
           <SuccessContent />
         </Suspense>
       </main>

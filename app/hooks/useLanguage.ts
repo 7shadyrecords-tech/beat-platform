@@ -16,16 +16,9 @@ function isLanguageCode(value: unknown): value is LanguageCode {
 }
 
 function getStoredLanguage(): LanguageCode {
-  if (typeof window === "undefined") {
-    return defaultLanguage;
-  }
-
+  if (typeof window === "undefined") return defaultLanguage;
   const stored = window.localStorage.getItem(localStorageLanguageKey);
-  if (isLanguageCode(stored)) {
-    return stored;
-  }
-
-  return defaultLanguage;
+  return isLanguageCode(stored) ? stored : defaultLanguage;
 }
 
 export function useLanguage() {
@@ -34,11 +27,11 @@ export function useLanguage() {
   const setLanguage = useCallback((lang: LanguageCode) => {
     setLanguageState(lang);
     window.localStorage.setItem(localStorageLanguageKey, lang);
-    // Reload page to apply translations everywhere
     window.location.reload();
   }, []);
 
-  const currentLanguage = languageOptions.find((item) => item.code === language) ?? languageOptions[0];
+  const currentLanguage =
+    languageOptions.find((item) => item.code === language) ?? languageOptions[0];
 
   return {
     language,

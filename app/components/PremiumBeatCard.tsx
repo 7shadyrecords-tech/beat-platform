@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Beat } from "../data/beats";
 import { usePlayer } from "../context/PlayerContext";
+import { useLanguage } from "@/app/hooks/useLanguage";
 import { BuyNowButton } from "./BuyNowButton";
 import { Waveform } from "./ui/Waveform";
 import { formatPriceEUR } from "../data/licenses";
@@ -15,6 +16,7 @@ type PremiumBeatCardProps = {
 
 export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
   const { currentBeat, isPlaying, playBeat } = usePlayer();
+  const { labels } = useLanguage();
   const isActive = currentBeat?.id === beat.id;
   const playing = isActive && isPlaying;
 
@@ -51,7 +53,7 @@ export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_var(--mouse-x,50%)_var(--mouse-y,30%),rgba(255,77,0,0.15),transparent_50%)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
         <span className="absolute left-3 top-3 glass rounded-full px-2.5 py-1 label-mono text-neon">
-          {beat.tag}
+          {labels.beatTags[beat.tag] ?? beat.tag}
         </span>
 
         <button
@@ -111,7 +113,7 @@ export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
             onClick={() => playBeat(beat)}
             className="glass flex-1 rounded-xl py-2.5 text-[10px] font-bold tracking-widest transition-colors hover:text-neon"
           >
-            {playing ? "PAUSE" : "PREVIEW"}
+            {playing ? labels.beatCard.pause : labels.beatCard.preview}
           </button>
           <BuyNowButton beat={beat} showFromPrice={false} />
         </div>

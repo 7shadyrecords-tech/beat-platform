@@ -21,9 +21,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BEATPLATFORM — Premium Beat Marketplace",
+  title: "BEATPLATFORM — Marketplace de Beats Premium",
   description:
-    "The world's most immersive beat marketplace. Exclusive trap, drill & cinematic instrumentals.",
+    "La marketplace de beats la plus immersive. Instrumentaux trap, drill & cinématiques exclusifs.",
 };
 
 export default function RootLayout({
@@ -33,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable} h-full`}
     >
       <body className="min-h-full bg-background font-body text-foreground antialiased">

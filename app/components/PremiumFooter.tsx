@@ -1,7 +1,14 @@
+"use client";
+
 import { FaInstagram, FaSpotify } from "react-icons/fa";
 import { SectionReveal } from "./ui/SectionReveal";
+import { useLanguage } from "@/app/hooks/useLanguage";
 
 export function PremiumFooter() {
+  const { labels } = useLanguage();
+  const f = labels.footer;
+  const year = new Date().getFullYear();
+
   return (
     <SectionReveal>
       <footer className="relative border-t border-white/5 py-12 sm:py-16 md:py-20">
@@ -22,7 +29,7 @@ export function PremiumFooter() {
                   <FaInstagram className="h-5 w-5" />
                 </a>
                 <a
-                  href="https://open.spotify.com/user/11141663550?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAR2_otleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA01NjcwNjczNDMzNTI0MjcAAae6L2Sof-59G1KPtG6T11fcJ9aq2Go9q2eb3K9ky6F_PPMdoYBXrTf6TUwTLg_aem_P4dcKocTcrqKPlaEYq_7KQ"
+                  href="https://open.spotify.com/user/11141663550"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-neon/15 bg-neon/5 text-neon transition-all hover:border-neon hover:shadow-[0_0_20px_rgba(255,77,0,0.5)]"
@@ -32,30 +39,32 @@ export function PremiumFooter() {
                 </a>
               </div>
               <p className="mt-4 max-w-sm text-xs sm:text-sm text-muted">
-                The premium marketplace for trap, drill & cinematic instrumentals.
-                Built for artists who demand excellence.
+                {f.description}
               </p>
             </div>
+
             <div>
-              <p className="label-mono text-xs sm:text-sm text-neon">Platform</p>
+              <p className="label-mono text-xs sm:text-sm text-neon">{f.platform}</p>
               <ul className="mt-3 sm:mt-4 space-y-2 text-xs sm:text-sm text-muted">
-                <li><a href="#featured" className="hover:text-foreground transition-colors">Featured</a></li>
-                <li><a href="#catalog" className="hover:text-foreground transition-colors">Catalog</a></li>
-                <li><a href="#analytics" className="hover:text-foreground transition-colors">Analytics</a></li>
+                <li><a href="#featured" className="hover:text-foreground transition-colors">{f.featured}</a></li>
+                <li><a href="#catalog" className="hover:text-foreground transition-colors">{f.catalog}</a></li>
+                <li><a href="#analytics" className="hover:text-foreground transition-colors">{f.analytics}</a></li>
               </ul>
             </div>
+
             <div>
-              <p className="label-mono text-xs sm:text-sm text-neon">Legal</p>
+              <p className="label-mono text-xs sm:text-sm text-neon">{f.legal}</p>
               <ul className="mt-3 sm:mt-4 space-y-2 text-xs sm:text-sm text-muted">
-                <li><a href="#" className="hover:text-foreground transition-colors">Licensing</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Terms</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">Privacy</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">{f.licensing}</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">{f.terms}</a></li>
+                <li><a href="#" className="hover:text-foreground transition-colors">{f.privacy}</a></li>
               </ul>
             </div>
+
             <div className="sm:col-span-2 md:col-span-1">
-              <p className="label-mono text-xs sm:text-sm text-neon">Contact</p>
+              <p className="label-mono text-xs sm:text-sm text-neon">{f.contact}</p>
               <p className="mt-3 sm:mt-4 max-w-xs text-xs sm:text-sm leading-relaxed text-muted">
-                For business inquiries, custom beats & licensing:
+                {f.contactDescription}
               </p>
               <a
                 href="mailto:Zewone.music@gmail.com"
@@ -65,11 +74,12 @@ export function PremiumFooter() {
               </a>
             </div>
           </div>
+
           <div className="mt-10 sm:mt-12 md:mt-16 flex flex-col items-center justify-between gap-3 sm:gap-4 border-t border-white/5 pt-6 sm:pt-8 sm:flex-row">
             <p className="label-mono text-xs sm:text-sm text-muted">
-              © {new Date().getFullYear()} Beat Platform
+              {f.copyright.replace("{year}", String(year))}
             </p>
-            <p className="text-xs sm:text-sm text-neon/60">Crafted with precision.</p>
+            <p className="text-xs sm:text-sm text-neon/60">{f.crafted}</p>
           </div>
         </div>
       </footer>
