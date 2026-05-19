@@ -17,6 +17,19 @@ export type Beat = {
 
 export const beats: Beat[] = [
   {
+    id: "test",
+    title: "TEST BEAT",
+    producer: "ARULO",
+    bpm: 140,
+    key: "Am",
+    genre: "Trap",
+    price: 1,
+    previewUrl: "/beats/audio/01-trap-hamza.mp3",
+    coverImage: "/beats/covers/01.jpg",
+    tag: "TEST",
+    tags: ["Test"],
+  },
+  {
     id: "1",
     title: "TRAP HAMZA",
     producer: "ARULO",
