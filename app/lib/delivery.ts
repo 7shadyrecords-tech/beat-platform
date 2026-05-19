@@ -66,7 +66,6 @@ const LICENSE_FILES: Record<string, string> = {
   "wav-lease": "wav-lease.pdf",
   "premium-lease": "wav-lease.pdf",
   "exclusive": "exclusive-license.pdf",
-  "test": "mp3-lease.pdf",
 };
 
 export async function getBeatFile(beatId: string, audioFile?: string): Promise<Buffer | null> {

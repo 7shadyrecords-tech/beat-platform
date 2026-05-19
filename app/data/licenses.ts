@@ -1,4 +1,4 @@
-export type LicenseId = "mp3-lease" | "wav-lease" | "premium-lease" | "exclusive" | "test";
+export type LicenseId = "mp3-lease" | "wav-lease" | "premium-lease" | "exclusive";
 
 export type License = {
   id: LicenseId;
@@ -10,14 +10,6 @@ export type License = {
 };
 
 export const licenses: License[] = [
-  {
-    id: "test",
-    name: "Test License",
-    price: 1,
-    priceCents: 100,
-    description: "Stripe test only — do not use in production.",
-    features: ["Test only"],
-  },
   {
     id: "mp3-lease",
     name: "MP3 Lease",
