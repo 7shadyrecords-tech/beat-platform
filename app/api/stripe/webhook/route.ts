@@ -123,9 +123,13 @@ export async function POST(request: NextRequest) {
           currency,
         });
 
-        console.log("Email delivery result:", emailResult);
+        if (emailResult.success) {
+          console.log("[webhook] Email sent, messageId:", emailResult.messageId);
+        } else {
+          console.error("[webhook] Email send failed:", emailResult.error);
+        }
       } catch (emailError) {
-        console.error("Error sending delivery email:", emailError);
+        console.error("[webhook] Unexpected error sending email:", emailError);
         // Don't fail the webhook, still mark as processed
       }
 

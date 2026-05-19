@@ -123,7 +123,7 @@ export async function sendBeatDeliveryEmail({
 `;
 
     const response = await emailClient.emails.send({
-      from: "Beat Platform <onboarding@resend.dev>",
+      from: "Beat Platform <no-reply@beatplatform.fr>",
       to,
       subject: `Purchase confirmed – ${beatTitle}`,
       html: htmlContent,
