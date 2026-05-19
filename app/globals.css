@@ -321,3 +321,17 @@ input[type="range"].player-range::-moz-range-thumb {
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+
+/* ── Audio protection ───────────────────────────────────────── */
+audio {
+  /* Remove native download button in supporting browsers */
+  /* controlsList is set via JS; this prevents accidental native UI */
+  pointer-events: none;
+}
+audio::-webkit-media-controls-panel,
+audio::-webkit-media-controls-enclosure {
+  overflow: hidden;
+}
+audio::-webkit-media-controls-download-button {
+  display: none !important;
+}
