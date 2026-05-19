@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyDownloadToken, consumeDownloadToken, getBeatFile, getLicenseFile } from "@/app/lib/delivery";
+import { verifyDownloadToken, getBeatFile, getLicenseFile } from "@/app/lib/delivery";
 
 export async function GET(
   request: NextRequest,
@@ -33,8 +33,8 @@ export async function GET(
       fileName = `beat-${tokenData.beatId}.mp3`;
       contentType = "audio/mpeg";
     } else if (tokenData.fileType === "license") {
-      fileBuffer = await getLicenseFile(tokenData.beatId);
-      fileName = `license-${tokenData.beatId}.pdf`;
+      fileBuffer = await getLicenseFile(tokenData.licenseId);
+      fileName = `license-${tokenData.licenseId}.pdf`;
       contentType = "application/pdf";
     }
 
@@ -44,9 +44,6 @@ export async function GET(
         { status: 404 }
       );
     }
-
-    // Consume the token (one-time use per file type)
-    await consumeDownloadToken(token);
 
     // Return file with proper headers
     return new NextResponse(new Uint8Array(fileBuffer), {

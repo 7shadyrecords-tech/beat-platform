@@ -3,118 +3,82 @@ import { promises as fs } from "fs";
 import path from "path";
 
 export type DownloadToken = {
-  token: string;
   beatId: string;
   email: string;
-  expiresAt: number;
   fileType: "beat" | "license";
+  licenseId: string;
+  expiresAt: number;
 };
 
-const TOKENS_FILE = path.join(process.cwd(), "storage/temp/tokens.json");
-const TOKEN_EXPIRES_IN_MS = 24 * 60 * 60 * 1000; // 24 hours
+const TOKEN_EXPIRES_IN_MS = 24 * 60 * 60 * 1000;
 
-async function readTokens(): Promise<Map<string, DownloadToken>> {
-  try {
-    const data = await fs.readFile(TOKENS_FILE, "utf-8");
-    const tokens = JSON.parse(data) as Record<string, DownloadToken>;
-    return new Map(Object.entries(tokens));
-  } catch {
-    return new Map();
-  }
+function getSecret(): string {
+  const secret = process.env.DOWNLOAD_TOKEN_SECRET;
+  if (!secret) throw new Error("DOWNLOAD_TOKEN_SECRET is not set");
+  return secret;
 }
 
-async function writeTokens(tokens: Map<string, DownloadToken>) {
-  const data = Object.fromEntries(tokens);
-  await fs.writeFile(TOKENS_FILE, JSON.stringify(data, null, 2), "utf-8");
+function b64url(str: string): string {
+  return Buffer.from(str).toString("base64url");
 }
 
-export async function createDownloadToken(
+export function createDownloadToken(
   beatId: string,
   email: string,
-  fileType: "beat" | "license"
-): Promise<string> {
-  const token = crypto.randomBytes(32).toString("hex");
-  const expiresAt = Date.now() + TOKEN_EXPIRES_IN_MS;
-
-  const tokens = await readTokens();
-  tokens.set(token, {
-    token,
+  fileType: "beat" | "license",
+  licenseId: string
+): string {
+  const payload = b64url(JSON.stringify({
     beatId,
     email,
-    expiresAt,
     fileType,
-  });
-
-  await writeTokens(tokens);
-  return token;
+    licenseId,
+    expiresAt: Date.now() + TOKEN_EXPIRES_IN_MS,
+  }));
+  const sig = crypto.createHmac("sha256", getSecret()).update(payload).digest("hex");
+  return `${payload}.${sig}`;
 }
 
-export async function verifyDownloadToken(
-  token: string
-): Promise<DownloadToken | null> {
-  const tokens = await readTokens();
-  const tokenData = tokens.get(token);
+export function verifyDownloadToken(token: string): DownloadToken | null {
+  try {
+    const [payload, sig] = token.split(".");
+    if (!payload || !sig) return null;
 
-  if (!tokenData) {
+    const expected = crypto.createHmac("sha256", getSecret()).update(payload).digest("hex");
+    if (!crypto.timingSafeEqual(Buffer.from(sig, "hex"), Buffer.from(expected, "hex"))) {
+      return null;
+    }
+
+    const data = JSON.parse(Buffer.from(payload, "base64url").toString()) as DownloadToken;
+    if (data.expiresAt < Date.now()) return null;
+
+    return data;
+  } catch {
     return null;
   }
-
-  // Check expiration
-  if (tokenData.expiresAt < Date.now()) {
-    tokens.delete(token);
-    await writeTokens(tokens);
-    return null;
-  }
-
-  return tokenData;
 }
 
-export async function consumeDownloadToken(token: string) {
-  const tokens = await readTokens();
-  tokens.delete(token);
-  await writeTokens(tokens);
-}
+const LICENSE_FILES: Record<string, string> = {
+  "mp3-lease": "mp3-lease.pdf",
+  "wav-lease": "wav-lease.pdf",
+  "premium-lease": "wav-lease.pdf",
+  "exclusive": "exclusive-license.pdf",
+  "test": "mp3-lease.pdf",
+};
 
 export async function getBeatFile(beatId: string): Promise<Buffer | null> {
   try {
-    const beatPath = path.join(
-      process.cwd(),
-      `storage/beats/${beatId}.mp3`
-    );
-    return await fs.readFile(beatPath);
+    return await fs.readFile(path.join(process.cwd(), `storage/beats/${beatId}.mp3`));
   } catch {
     return null;
   }
 }
 
-export async function getLicenseFile(beatId: string): Promise<Buffer | null> {
+export async function getLicenseFile(licenseId: string): Promise<Buffer | null> {
   try {
-    const licensePath = path.join(
-      process.cwd(),
-      `storage/licenses/${beatId}.pdf`
-    );
-    return await fs.readFile(licensePath);
+    const filename = LICENSE_FILES[licenseId] ?? "mp3-lease.pdf";
+    return await fs.readFile(path.join(process.cwd(), `storage/licenses/${filename}`));
   } catch {
     return null;
   }
-}
-
-// Clean up expired tokens periodically
-export async function cleanupExpiredTokens() {
-  const tokens = await readTokens();
-  const now = Date.now();
-  let cleaned = 0;
-
-  for (const [token, data] of tokens.entries()) {
-    if (data.expiresAt < now) {
-      tokens.delete(token);
-      cleaned++;
-    }
-  }
-
-  if (cleaned > 0) {
-    await writeTokens(tokens);
-  }
-
-  return cleaned;
 }

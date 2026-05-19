@@ -2,44 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/app/lib/stripe";
 import { sendBeatDeliveryEmail } from "@/app/lib/resend";
-import { promises as fs } from "fs";
-import path from "path";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-const PROCESSED_PAYMENTS_FILE = path.join(
-  process.cwd(),
-  "storage/temp/processed-payments.json"
-);
-
-async function isPaymentProcessed(sessionId: string): Promise<boolean> {
-  try {
-    const data = await fs.readFile(PROCESSED_PAYMENTS_FILE, "utf-8");
-    const payments = JSON.parse(data) as Record<string, number>;
-    return !!payments[sessionId];
-  } catch {
-    return false;
-  }
-}
-
-async function markPaymentProcessed(sessionId: string) {
-  try {
-    let payments: Record<string, number> = {};
-    try {
-      const data = await fs.readFile(PROCESSED_PAYMENTS_FILE, "utf-8");
-      payments = JSON.parse(data);
-    } catch {
-      // File doesn't exist yet
-    }
-    payments[sessionId] = Date.now();
-    await fs.writeFile(
-      PROCESSED_PAYMENTS_FILE,
-      JSON.stringify(payments, null, 2),
-      "utf-8"
-    );
-  } catch (error) {
-    console.error("Error marking payment as processed:", error);
-  }
-}
 
 export async function POST(request: NextRequest) {
   console.log(`[webhook] POST /api/stripe/webhook received`);
@@ -77,47 +41,37 @@ export async function POST(request: NextRequest) {
 
     console.log(`[webhook] event received: ${event.type}`);
 
-    // Handle checkout.session.completed event
     if (event.type === "checkout.session.completed") {
       const session = event.data.object as Stripe.Checkout.Session;
 
-      // Prevent duplicate processing
-      if (await isPaymentProcessed(session.id)) {
-        console.log(`Payment ${session.id} already processed, skipping`);
-        return NextResponse.json({ received: true });
-      }
-
       console.log("[webhook] session.metadata:", JSON.stringify(session.metadata));
 
-      const customerId = session.customer_details?.email;
+      const customerEmail = session.customer_details?.email;
       const beatTitle = session.metadata?.beatTitle;
       const beatId = session.metadata?.beatId;
       const licenseName = session.metadata?.licenseName;
+      const licenseId = session.metadata?.licenseId;
 
-      if (!customerId || !beatTitle || !beatId || !licenseName) {
-        console.error("Missing required metadata in session:", {
-          customerId,
+      if (!customerEmail || !beatTitle || !beatId || !licenseName || !licenseId) {
+        console.error("[webhook] Missing required metadata:", {
+          customerEmail,
           beatTitle,
           beatId,
           licenseName,
+          licenseId,
         });
-        // Still mark as processed to avoid retry loops
-        await markPaymentProcessed(session.id);
-        return NextResponse.json({
-          received: true,
-          warning: "Missing metadata",
-        });
+        return NextResponse.json({ received: true, warning: "Missing metadata" });
       }
 
       const amountTotal = session.amount_total ?? 0;
-      const currency = session.currency ?? "usd";
+      const currency = session.currency ?? "eur";
 
-      // Send delivery email
       try {
         const emailResult = await sendBeatDeliveryEmail({
-          to: customerId,
+          to: customerEmail,
           beatTitle,
           licenseName,
+          licenseId,
           beatId,
           amountTotal,
           currency,
@@ -130,11 +84,8 @@ export async function POST(request: NextRequest) {
         }
       } catch (emailError) {
         console.error("[webhook] Unexpected error sending email:", emailError);
-        // Don't fail the webhook, still mark as processed
       }
 
-      // Mark payment as processed
-      await markPaymentProcessed(session.id);
       console.log(`[webhook] session ${session.id} processed successfully`);
     }
 
