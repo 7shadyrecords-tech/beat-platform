@@ -40,8 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# storage (sensitive files)
-/storage/beats/*
-/storage/licenses/*
+# storage
 /storage/temp/*
 !storage/.gitkeep
