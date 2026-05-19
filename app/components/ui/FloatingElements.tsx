@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { beats } from "@/app/data/beats";
+
+const topBeat = beats.reduce((a, b) => ((b.plays ?? 0) > (a.plays ?? 0) ? b : a), beats[0]);
 
 const floats = [
   { top: "15%", left: "8%", size: 6, delay: 0 },
@@ -54,7 +57,7 @@ export function FloatingElements() {
         transition={{ delay: 1.5, duration: 0.8 }}
       >
         <p className="label-mono text-muted">New drop</p>
-        <p className="mt-1 text-sm font-semibold">YOUNG TRIZZY</p>
+        <p className="mt-1 text-sm font-semibold">{topBeat.title}</p>
         <div className="mt-2 h-1 w-20 overflow-hidden rounded-full bg-white/10">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-neon to-neon-red"

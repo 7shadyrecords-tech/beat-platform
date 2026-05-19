@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { Waveform } from "./ui/Waveform";
 import { useLanguage } from "@/app/hooks/useLanguage";
+import { beats } from "@/app/data/beats";
+
+const featuredBeat = beats.reduce((a, b) => ((b.plays ?? 0) > (a.plays ?? 0) ? b : a), beats[0]);
 
 export function PremiumHero() {
   const { labels } = useLanguage();
@@ -67,8 +70,8 @@ export function PremiumHero() {
           <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:items-center md:justify-between">
             <div className="min-w-0">
               <p className="label-mono text-xs sm:text-sm text-muted">{labels.hero.playingNow}</p>
-              <p className="mt-2 font-display text-lg sm:text-2xl font-bold truncate">TRAP HAMZA</p>
-              <p className="text-xs sm:text-sm text-muted truncate">ARULO · 145 BPM · F#m</p>
+              <p className="mt-2 font-display text-lg sm:text-2xl font-bold truncate">{featuredBeat.title}</p>
+              <p className="text-xs sm:text-sm text-muted truncate">{featuredBeat.producer} · {featuredBeat.bpm} BPM · {featuredBeat.key}</p>
             </div>
             <Waveform active height={48} bars={40} className="md:max-w-md md:flex-1 min-w-0" />
           </div>
