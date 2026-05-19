@@ -103,7 +103,7 @@ export function FeaturedBeats() {
                     className="font-display text-xl font-bold"
                     style={{ color: ORANGE }}
                   >
-                    from €{hero.price}
+                    {labels.beatCard.from} €{hero.price}
                   </span>
                   <div className="flex gap-2">
                     <button
@@ -176,7 +176,7 @@ export function FeaturedBeats() {
                       className="font-display text-sm font-bold"
                       style={{ color: ORANGE }}
                     >
-                      from €{beat.price}
+                      {labels.beatCard.from} €{beat.price}
                     </span>
                     <BuyNowButton
                       beat={beat}

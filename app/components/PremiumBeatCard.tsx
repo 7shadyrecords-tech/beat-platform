@@ -90,7 +90,7 @@ export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
               <p className="text-xs text-muted">{beat.producer}</p>
             </div>
             <span className="font-display text-sm font-bold neon-text">
-              from {formatPriceEUR(29)}
+              {labels.beatCard.from} {formatPriceEUR(29)}
             </span>
           </div>
         </div>
