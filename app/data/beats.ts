@@ -32,7 +32,7 @@ export const beats: Beat[] = [
     featured: true,
     plays: 12400,
     trending: 1,
-    audioFile: "AMA (#key G Minor 6A ) BPM110 ZewOneBeats .mp3",
+    audioFile: "1. AMA (#key G Minor 6A ) BPM110 ZewOneBeats .mp3",
   },
   {
     id: "2",
@@ -49,7 +49,7 @@ export const beats: Beat[] = [
     featured: true,
     plays: 9800,
     trending: 2,
-    audioFile: "DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.mp3",
+    audioFile: "2. DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.mp3",
   },
   {
     id: "3",
@@ -66,7 +66,7 @@ export const beats: Beat[] = [
     featured: true,
     plays: 15200,
     trending: 3,
-    audioFile: "dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.mp3",
+    audioFile: "3. dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.mp3",
   },
 ];
 
