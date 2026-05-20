@@ -49,8 +49,9 @@ export async function GET(
 
     if (tokenData.fileType === "beat") {
       fileBuffer = await getBeatFile(tokenData.beatId, tokenData.audioFile);
-      fileName = `beat-${tokenData.beatId}.mp3`;
-      contentType = "audio/mpeg";
+      const isWav = tokenData.audioFile?.toLowerCase().endsWith(".wav") ?? false;
+      fileName = `beat-${tokenData.beatId}.${isWav ? "wav" : "mp3"}`;
+      contentType = isWav ? "audio/wav" : "audio/mpeg";
     } else if (tokenData.fileType === "license") {
       fileBuffer = await getLicenseFile(tokenData.licenseId);
       fileName = `license-${tokenData.licenseId}.pdf`;

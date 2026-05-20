@@ -94,6 +94,21 @@ export async function logDownload(entry: DownloadLog): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Exclusive licence: mark a beat as sold and check sale status.
+// Key: exclusive:sold:{beatId} — persists permanently (no TTL).
+// ---------------------------------------------------------------------------
+export async function markExclusiveSold(beatId: string): Promise<void> {
+  await pipeline([["SET", `exclusive:sold:${beatId}`, "1"]]);
+}
+
+export async function isExclusiveSold(beatId: string): Promise<boolean> {
+  if (!REDIS_URL || !REDIS_TOKEN) return false;
+  const results = await pipeline([["GET", `exclusive:sold:${beatId}`]]);
+  if (!results) return false;
+  return results[0] === "1";
+}
+
+// ---------------------------------------------------------------------------
 // Read download logs for a token (for debugging / admin use)
 // ---------------------------------------------------------------------------
 export async function getDownloadLogs(tokenHash: string): Promise<DownloadLog[]> {

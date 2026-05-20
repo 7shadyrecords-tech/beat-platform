@@ -13,7 +13,8 @@ export type Beat = {
   featured?: boolean;
   plays?: number;
   trending?: number;
-  audioFile?: string; // filename in storage/beats/ — defaults to {id}.mp3
+  audioFile?: string; // MP3 filename in storage/beats/ — defaults to {id}.mp3
+  wavFile?: string;   // WAV filename in storage/beats/ — required for WAV/Premium/Exclusive
 };
 
 export const beats: Beat[] = [
@@ -33,6 +34,7 @@ export const beats: Beat[] = [
     plays: 12400,
     trending: 1,
     audioFile: "1. AMA (#key G Minor 6A ) BPM110 ZewOneBeats .mp3",
+    wavFile: "1. AMA (#key G Minor 6A ) BPM110 ZewOneBeats .wav",
   },
   {
     id: "2",
@@ -50,6 +52,7 @@ export const beats: Beat[] = [
     plays: 9800,
     trending: 2,
     audioFile: "2. DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.mp3",
+    wavFile: "2. DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.wav",
   },
   {
     id: "3",
@@ -67,6 +70,7 @@ export const beats: Beat[] = [
     plays: 15200,
     trending: 3,
     audioFile: "3. dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.mp3",
+    wavFile: "3. dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.wav",
   },
 ];
 

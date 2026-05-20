@@ -20,6 +20,7 @@ export type EmailPayload = {
   licenseId: string;
   beatId: string;
   audioFile?: string;
+  wavFile?: string;
   amountTotal: number;
   currency: string;
 };
@@ -31,6 +32,8 @@ function formatPrice(amountInCents: number, currency: string): string {
   }).format(amountInCents / 100);
 }
 
+const WAV_LICENSES = new Set(["wav-lease", "premium-lease", "exclusive"]);
+
 export async function sendBeatDeliveryEmail({
   to,
   beatTitle,
@@ -38,6 +41,7 @@ export async function sendBeatDeliveryEmail({
   licenseId,
   beatId,
   audioFile,
+  wavFile,
   amountTotal,
   currency,
 }: EmailPayload): Promise<{ success: boolean; messageId?: string; error?: string }> {
@@ -48,8 +52,13 @@ export async function sendBeatDeliveryEmail({
       return { success: false, error: "Resend API key not configured" };
     }
 
-    const beatToken = createDownloadToken(beatId, to, "beat", licenseId, audioFile);
-    const licenseToken = createDownloadToken(beatId, to, "license", licenseId, audioFile);
+    // WAV/Premium/Exclusive → deliver WAV file if available, else fall back to MP3
+    const isWavLicense = WAV_LICENSES.has(licenseId);
+    const beatAudioFile = isWavLicense ? (wavFile ?? audioFile) : audioFile;
+    const beatFileLabel = isWavLicense && wavFile ? "WAV" : "MP3";
+
+    const beatToken = createDownloadToken(beatId, to, "beat", licenseId, beatAudioFile);
+    const licenseToken = createDownloadToken(beatId, to, "license", licenseId, beatAudioFile);
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const beatDownloadUrl = `${siteUrl}/api/download/${beatToken}`;
@@ -90,7 +99,7 @@ export async function sendBeatDeliveryEmail({
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">BEAT<span>PLATFORM</span></div>
+      <div class="logo">ZewOne <span>Beats</span></div>
       <div class="badge">Achat confirmé</div>
       <div class="heading">Vos fichiers sont prêts</div>
       <p class="subheading">Merci pour votre achat. Téléchargez vos fichiers ci-dessous avant l'expiration des liens.</p>
@@ -109,7 +118,7 @@ export async function sendBeatDeliveryEmail({
 
     <div class="card">
       <div class="card-label">Téléchargements</div>
-      <a href="${beatDownloadUrl}" class="btn btn-primary">Télécharger le beat (MP3)</a>
+      <a href="${beatDownloadUrl}" class="btn btn-primary">Télécharger le beat (${beatFileLabel})</a>
       <a href="${licenseDownloadUrl}" class="btn btn-secondary">Télécharger la licence (PDF)</a>
       <hr class="divider" />
       <div class="notice">

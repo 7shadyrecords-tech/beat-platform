@@ -64,7 +64,7 @@ export function verifyDownloadToken(token: string): DownloadToken | null {
 const LICENSE_FILES: Record<string, string> = {
   "mp3-lease": "mp3-lease.pdf",
   "wav-lease": "wav-lease.pdf",
-  "premium-lease": "wav-lease.pdf",
+  "premium-lease": "premium-lease.pdf",
   "exclusive": "exclusive-license.pdf",
 };
 

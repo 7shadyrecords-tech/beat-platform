@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getBeatById } from "@/app/lib/beats";
 import { getLicense } from "@/app/data/licenses";
 import { getSiteUrl, getStripe } from "@/app/lib/stripe";
+import { isExclusiveSold } from "@/app/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -26,6 +27,17 @@ export async function POST(request: Request) {
     const license = getLicense(licenseId);
     if (!license) {
       return NextResponse.json({ error: "Invalid license" }, { status: 400 });
+    }
+
+    // Block exclusive re-purchase
+    if (licenseId === "exclusive") {
+      const sold = await isExclusiveSold(beat.id);
+      if (sold) {
+        return NextResponse.json(
+          { error: "Ce beat est déjà vendu en exclusivité et n'est plus disponible." },
+          { status: 409 }
+        );
+      }
     }
 
     const siteUrl = getSiteUrl();
@@ -63,6 +75,7 @@ export async function POST(request: Request) {
         licenseId: license.id,
         licenseName: license.name,
         ...(beat.audioFile ? { audioFile: beat.audioFile } : {}),
+        ...(beat.wavFile ? { wavFile: beat.wavFile } : {}),
       },
       success_url: `${siteUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl}/checkout/cancel`,

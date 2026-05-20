@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/app/lib/stripe";
 import { sendBeatDeliveryEmail } from "@/app/lib/resend";
+import { markExclusiveSold } from "@/app/lib/db";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -52,6 +53,7 @@ export async function POST(request: NextRequest) {
       const licenseName = session.metadata?.licenseName;
       const licenseId = session.metadata?.licenseId;
       const audioFile = session.metadata?.audioFile || undefined;
+      const wavFile = session.metadata?.wavFile || undefined;
 
       if (!customerEmail || !beatTitle || !beatId || !licenseName || !licenseId) {
         console.error("[webhook] Missing required metadata:", {
@@ -67,6 +69,16 @@ export async function POST(request: NextRequest) {
       const amountTotal = session.amount_total ?? 0;
       const currency = session.currency ?? "eur";
 
+      // Mark exclusive beat as sold (before email so status is accurate)
+      if (licenseId === "exclusive") {
+        try {
+          await markExclusiveSold(beatId);
+          console.log(`[webhook] beat ${beatId} marked as exclusive sold`);
+        } catch (err) {
+          console.error("[webhook] Failed to mark exclusive sold:", err);
+        }
+      }
+
       try {
         const emailResult = await sendBeatDeliveryEmail({
           to: customerEmail,
@@ -75,6 +87,7 @@ export async function POST(request: NextRequest) {
           licenseId,
           beatId,
           audioFile,
+          wavFile,
           amountTotal,
           currency,
         });
