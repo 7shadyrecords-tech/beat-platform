@@ -8,6 +8,7 @@ const nav = [
   { id: "trending", href: "#trending" },
   { id: "catalog", href: "#catalog" },
   { id: "analytics", href: "#analytics" },
+  { id: "drums", href: "/drums" },
 ] as const;
 
 export function PremiumHeader() {
