@@ -16,10 +16,10 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <a href="#" className="group flex items-center gap-2">
           <span className="flex h-8 w-8 items-center justify-center border border-neon bg-neon/10 font-display text-xs font-bold text-neon neon-glow">
-            BP
+            ZB
           </span>
           <span className="font-display text-sm font-bold tracking-[0.25em] text-foreground sm:text-base">
-            BEAT<span className="neon-text">PLATFORM</span>
+            ZewOne <span className="neon-text">Beats</span>
           </span>
         </a>
 

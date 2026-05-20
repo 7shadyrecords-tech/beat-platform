@@ -36,7 +36,7 @@ export function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="font-mono text-[10px] uppercase tracking-widest text-muted">
-            © {new Date().getFullYear()} Beat Platform. All rights reserved.
+            © {new Date().getFullYear()} ZewOne Beats. All rights reserved.
           </p>
           <p className="font-mono text-[10px] text-neon/60">
             獣性 — BEAST MODE ACTIVATED

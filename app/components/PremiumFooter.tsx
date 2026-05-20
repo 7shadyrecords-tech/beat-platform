@@ -16,7 +16,7 @@ export function PremiumFooter() {
           <div className="grid gap-8 sm:gap-10 md:gap-12 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
             <div className="sm:col-span-2 md:col-span-1">
               <p className="font-display text-lg sm:text-2xl font-bold tracking-widest">
-                BEAT<span className="neon-text">PLATFORM</span>
+                ZewOne <span className="neon-text">Beats</span>
               </p>
               <div className="mt-4 flex items-center gap-3">
                 <a

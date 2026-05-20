@@ -119,7 +119,7 @@ export async function sendBeatDeliveryEmail({
 
     <div class="footer">
       <p>Des questions ? <a href="mailto:Zewone.music@gmail.com">Zewone.music@gmail.com</a></p>
-      <p style="margin: 8px 0 0; color: #333;">&copy; ${new Date().getFullYear()} Beat Platform</p>
+      <p style="margin: 8px 0 0; color: #333;">&copy; ${new Date().getFullYear()} ZewOne Beats</p>
     </div>
   </div>
 </body>
@@ -127,7 +127,7 @@ export async function sendBeatDeliveryEmail({
 `;
 
     const response = await emailClient.emails.send({
-      from: "Beat Platform <no-reply@zewonebeats.com>",
+      from: "ZewOne Beats <no-reply@zewonebeats.com>",
       to,
       subject: `Achat confirmé – ${beatTitle}`,
       html: htmlContent,

@@ -145,7 +145,7 @@ export const translations = {
       terms: "Conditions",
       cgv: "CGV",
       privacy: "Confidentialité",
-      copyright: "© {year} Beat Platform",
+      copyright: "© {year} ZewOne Beats",
       crafted: "Conçu avec précision.",
     },
     checkout: {
@@ -295,7 +295,7 @@ export const translations = {
       terms: "Terms",
       cgv: "T&Cs",
       privacy: "Privacy",
-      copyright: "© {year} Beat Platform",
+      copyright: "© {year} ZewOne Beats",
       crafted: "Crafted with precision.",
     },
     checkout: {
@@ -445,7 +445,7 @@ export const translations = {
       terms: "Bedingungen",
       cgv: "AGB",
       privacy: "Datenschutz",
-      copyright: "© {year} Beat Platform",
+      copyright: "© {year} ZewOne Beats",
       crafted: "Mit Präzision entwickelt.",
     },
     checkout: {
@@ -595,7 +595,7 @@ export const translations = {
       terms: "Términos",
       cgv: "T&C",
       privacy: "Privacidad",
-      copyright: "© {year} Beat Platform",
+      copyright: "© {year} ZewOne Beats",
       crafted: "Hecho con precisión.",
     },
     checkout: {

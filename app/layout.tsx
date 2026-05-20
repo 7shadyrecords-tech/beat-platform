@@ -21,9 +21,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BEATPLATFORM — Marketplace de Beats Premium",
+  title: "ZewOne Beats — Marketplace de Beats Premium",
   description:
-    "La marketplace de beats la plus immersive. Instrumentaux trap, drill & cinématiques exclusifs.",
+    "La marketplace de beats la plus immersive. Instrumentaux trap, drill & cinématiques exclusifs par ZewOne.",
 };
 
 export default function RootLayout({
