@@ -10,6 +10,7 @@ const nav = [
   { id: "analytics", href: "/#analytics" },
   { id: "collabs", href: "/#collabs" },
   { id: "drums", href: "/drums" },
+  { id: "vst", href: "/vst" },
 ] as const;
 
 export function PremiumHeader() {
