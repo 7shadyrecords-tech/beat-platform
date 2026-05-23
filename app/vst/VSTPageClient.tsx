@@ -40,7 +40,7 @@ export function VSTPageClient() {
 
                 <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted">
                   Synthés, effets et samplers conçus pour la production trap & cinématique.
-                  Compatible macOS et Windows — VST3, AU.
+                  Compatible macOS uniquement — VST3, AU.
                 </p>
 
                 {/* Coming soon badge */}
