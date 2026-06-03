@@ -1,0 +1,31 @@
+<svg width="960" height="540" viewBox="0 0 960 540" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">TRAFIK Synth interface placeholder</title>
+  <desc id="desc">Dark placeholder mockup for a future TRAFIK Synth plugin interface.</desc>
+  <rect width="960" height="540" rx="32" fill="#050303"/>
+  <rect x="32" y="32" width="896" height="476" rx="26" fill="#0B0807" stroke="#2A120A"/>
+  <rect x="64" y="64" width="832" height="72" rx="18" fill="#120907" stroke="#3A170C"/>
+  <circle cx="101" cy="100" r="12" fill="#FF4D00"/>
+  <circle cx="136" cy="100" r="12" fill="#FF8A3D" fill-opacity="0.45"/>
+  <circle cx="171" cy="100" r="12" fill="#FF2A2A" fill-opacity="0.35"/>
+  <text x="730" y="108" fill="#FF8A3D" font-family="JetBrains Mono, monospace" font-size="22" letter-spacing="4">TRAFIK</text>
+  <rect x="64" y="168" width="260" height="260" rx="20" fill="#090706" stroke="#26100A"/>
+  <rect x="350" y="168" width="260" height="260" rx="20" fill="#090706" stroke="#26100A"/>
+  <rect x="636" y="168" width="260" height="260" rx="20" fill="#090706" stroke="#26100A"/>
+  <g opacity="0.9">
+    <circle cx="194" cy="268" r="70" fill="#120907" stroke="#FF4D00" stroke-opacity="0.45" stroke-width="8"/>
+    <circle cx="194" cy="268" r="34" fill="#FF4D00" fill-opacity="0.18"/>
+    <rect x="107" y="368" width="174" height="14" rx="7" fill="#FF4D00" fill-opacity="0.45"/>
+  </g>
+  <g opacity="0.8">
+    <path d="M394 326C394 270 421 214 480 214C539 214 566 270 566 326" stroke="#FF8A3D" stroke-opacity="0.6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M394 326C394 292 421 258 480 258C539 258 566 292 566 326" stroke="#FF4D00" stroke-opacity="0.5" stroke-width="8" stroke-linecap="round"/>
+    <rect x="398" y="368" width="164" height="14" rx="7" fill="#FF8A3D" fill-opacity="0.35"/>
+  </g>
+  <g opacity="0.78">
+    <rect x="686" y="214" width="34" height="154" rx="17" fill="#FF4D00" fill-opacity="0.22"/>
+    <rect x="747" y="194" width="34" height="174" rx="17" fill="#FF8A3D" fill-opacity="0.28"/>
+    <rect x="808" y="238" width="34" height="130" rx="17" fill="#FF2A2A" fill-opacity="0.22"/>
+    <rect x="695" y="388" width="138" height="14" rx="7" fill="#FF4D00" fill-opacity="0.42"/>
+  </g>
+  <rect x="64" y="456" width="832" height="20" rx="10" fill="#FF4D00" fill-opacity="0.08"/>
+</svg>

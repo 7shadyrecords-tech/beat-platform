@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { createDownloadToken } from "./delivery";
+import { contactEmail, contactMailto } from "./contact";
 
 let resend: Resend | null = null;
 
@@ -127,7 +128,7 @@ export async function sendBeatDeliveryEmail({
     </div>
 
     <div class="footer">
-      <p>Des questions ? <a href="mailto:Zewone.music@gmail.com">Zewone.music@gmail.com</a></p>
+      <p>Des questions ? <a href="${contactMailto}">${contactEmail}</a></p>
       <p style="margin: 8px 0 0; color: #333;">&copy; ${new Date().getFullYear()} ZewOne Beats</p>
     </div>
   </div>

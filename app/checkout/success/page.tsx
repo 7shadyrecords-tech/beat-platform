@@ -78,12 +78,13 @@ function SuccessContent() {
 }
 
 export default function CheckoutSuccessPage() {
+  const { labels } = useLanguage();
 
   return (
     <div className="relative min-h-screen">
       <AnimatedBackground />
       <main className="relative z-10 flex min-h-screen flex-col items-center justify-center px-4">
-        <Suspense fallback={<div className="text-foreground">Chargement...</div>}>
+        <Suspense fallback={<div className="text-foreground">{labels.checkout.loading}</div>}>
           <SuccessContent />
         </Suspense>
       </main>

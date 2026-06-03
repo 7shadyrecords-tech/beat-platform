@@ -5,19 +5,15 @@ import { PremiumHeader } from "../components/PremiumHeader";
 import { PremiumFooter } from "../components/PremiumFooter";
 import { CheckoutProvider } from "../context/CheckoutContext";
 import { PlayerProvider } from "../context/PlayerContext";
+import { useLanguage } from "@/app/hooks/useLanguage";
+import { contactEmail, contactMailto } from "@/app/lib/contact";
 
 const ORANGE = "#e05c20";
 
-const PLACEHOLDER_KITS = [
-  { title: "808 Trap Kit Vol.1", tags: ["808s", "Hi-hats", "Percs"], count: "—" },
-  { title: "Drill Essentials", tags: ["Snares", "Kicks", "FX"], count: "—" },
-  { title: "Cinematic Perc Pack", tags: ["Cinematic", "Percs", "Textures"], count: "—" },
-  { title: "Melodic Drum Kit", tags: ["Samples", "Loops", "Drums"], count: "—" },
-  { title: "Hard Knock Collection", tags: ["Kicks", "Snares", "Claps"], count: "—" },
-  { title: "Trap God Bundle", tags: ["808s", "Trap", "Complete"], count: "—" },
-];
-
 export function DrumsPageClient() {
+  const { labels } = useLanguage();
+  const drums = labels.drumsPage;
+
   return (
     <PlayerProvider>
       <CheckoutProvider>
@@ -35,17 +31,16 @@ export function DrumsPageClient() {
                 transition={{ duration: 0.7 }}
               >
                 <p className="label-mono text-xs tracking-widest" style={{ color: ORANGE }}>
-                  DRUM KITS
+                  {drums.eyebrow}
                 </p>
 
                 <h1 className="heading-luxury mt-4 text-4xl font-bold md:text-6xl">
-                  Des kits qui{" "}
-                  <span className="neon-text">frappent fort</span>
+                  {drums.titlePrefix}{" "}
+                  <span className="neon-text">{drums.titleHighlight}</span>
                 </h1>
 
                 <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted">
-                  808s, snares, hi-hats, percs — tous les éléments pour construire
-                  tes prods trap et drill depuis zéro.
+                  {drums.description}
                 </p>
 
                 {/* Coming soon badge */}
@@ -66,10 +61,10 @@ export function DrumsPageClient() {
                     transition={{ duration: 2.5, repeat: Infinity }}
                   >
                     <p className="font-display text-lg font-bold tracking-widest" style={{ color: ORANGE }}>
-                      BIENTÔT DISPONIBLE
+                      {drums.comingSoon}
                     </p>
                     <p className="mt-1 text-xs text-muted">
-                      Les kits arrivent prochainement — reste connecté.
+                      {drums.comingSoonDescription}
                     </p>
                   </motion.div>
                 </div>
@@ -77,7 +72,7 @@ export function DrumsPageClient() {
 
               {/* Placeholder kit grid */}
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {PLACEHOLDER_KITS.map((kit, i) => (
+                {drums.kits.map((kit, i) => (
                   <motion.article
                     key={kit.title}
                     className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02] p-5 transition-colors hover:border-white/10"
@@ -89,7 +84,7 @@ export function DrumsPageClient() {
                     <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 rounded-2xl bg-black/70 backdrop-blur-[2px]">
                       <span className="text-xl">🔒</span>
                       <span className="label-mono text-[10px] tracking-widest" style={{ color: ORANGE }}>
-                        BIENTÔT
+                        {drums.productStatus}
                       </span>
                     </div>
 
@@ -101,7 +96,9 @@ export function DrumsPageClient() {
                       >
                         <span className="text-xl">🥁</span>
                       </div>
-                      <span className="font-mono text-xs text-muted">{kit.count} sons</span>
+                      <span className="font-mono text-xs text-muted">
+                        {kit.count} {drums.soundCountLabel}
+                      </span>
                     </div>
 
                     <h3 className="mt-3 font-display text-sm font-bold">{kit.title}</h3>
@@ -122,7 +119,7 @@ export function DrumsPageClient() {
                       disabled
                       className="mt-4 w-full rounded-xl py-2.5 text-[10px] font-bold tracking-widest text-white/20 border border-white/5 cursor-not-allowed"
                     >
-                      TÉLÉCHARGER
+                      {drums.disabledCta}
                     </button>
                   </motion.article>
                 ))}
@@ -136,13 +133,13 @@ export function DrumsPageClient() {
                 transition={{ delay: 0.6, duration: 0.6 }}
               >
                 <p className="text-sm text-muted">
-                  Des questions ?{" "}
+                  {drums.contactPrefix}{" "}
                   <a
-                    href="mailto:Zewone.music@gmail.com"
+                    href={contactMailto}
                     className="font-medium underline underline-offset-2 transition-colors hover:text-foreground"
                     style={{ color: ORANGE }}
                   >
-                    Zewone.music@gmail.com
+                    {contactEmail}
                   </a>
                 </p>
               </motion.div>

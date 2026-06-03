@@ -1,8 +1,10 @@
 "use client";
 
 import { FaInstagram, FaSpotify } from "react-icons/fa";
+import Link from "next/link";
 import { SectionReveal } from "./ui/SectionReveal";
 import { useLanguage } from "@/app/hooks/useLanguage";
+import { contactEmail, contactMailto } from "@/app/lib/contact";
 
 export function PremiumFooter() {
   const { labels } = useLanguage();
@@ -55,10 +57,10 @@ export function PremiumFooter() {
             <div>
               <p className="label-mono text-xs sm:text-sm text-neon">{f.legal}</p>
               <ul className="mt-3 sm:mt-4 space-y-2 text-xs sm:text-sm text-muted">
-                <li><a href="#" className="hover:text-foreground transition-colors">{f.licensing}</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">{f.terms}</a></li>
-                <li><a href="/legal/cgv" className="hover:text-foreground transition-colors">{f.cgv}</a></li>
-                <li><a href="#" className="hover:text-foreground transition-colors">{f.privacy}</a></li>
+                <li><Link href="/legal/licences" className="hover:text-foreground transition-colors">{f.licensing}</Link></li>
+                <li><Link href="/legal/conditions" className="hover:text-foreground transition-colors">{f.terms}</Link></li>
+                <li><Link href="/legal/cgv" className="hover:text-foreground transition-colors">{f.cgv}</Link></li>
+                <li><Link href="/legal/confidentialite" className="hover:text-foreground transition-colors">{f.privacy}</Link></li>
               </ul>
             </div>
 
@@ -68,10 +70,10 @@ export function PremiumFooter() {
                 {f.contactDescription}
               </p>
               <a
-                href="mailto:Zewone.music@gmail.com"
+                href={contactMailto}
                 className="mt-2 sm:mt-3 inline-block text-xs sm:text-sm font-medium text-muted transition-colors hover:text-foreground break-all"
               >
-                Zewone.music@gmail.com
+                {contactEmail}
               </a>
             </div>
           </div>
