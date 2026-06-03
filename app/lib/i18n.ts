@@ -625,6 +625,9 @@ export const translations = {
       exploreCollection: "DÉCOUVRIR LA COLLECTION",
       viewCatalog: "VOIR LE CATALOGUE",
       playingNow: "Aperçu en cours",
+      live: "Live",
+      listeningNow: "en écoute",
+      newDrop: "Nouveauté",
       stats: [
         { value: "2,4M+", label: "Revenus producteurs" },
         { value: "48K+", label: "Beats vendus" },
@@ -815,6 +818,9 @@ export const translations = {
       exploreCollection: "EXPLORE COLLECTION",
       viewCatalog: "VIEW CATALOG",
       playingNow: "Now playing preview",
+      live: "Live",
+      listeningNow: "listening now",
+      newDrop: "New drop",
       stats: [
         { value: "$2.4M+", label: "Producer revenue" },
         { value: "48K+", label: "Beats sold" },
@@ -1005,6 +1011,9 @@ export const translations = {
       exploreCollection: "SAMMLUNG ERKUNDEN",
       viewCatalog: "KATALOG ANSEHEN",
       playingNow: "Jetzt vorgespielt",
+      live: "Live",
+      listeningNow: "hören gerade zu",
+      newDrop: "Neuheit",
       stats: [
         { value: "2,4M+", label: "Produzentenumsatz" },
         { value: "48K+", label: "Beats verkauft" },
@@ -1195,6 +1204,9 @@ export const translations = {
       exploreCollection: "EXPLORAR COLECCIÓN",
       viewCatalog: "VER CATÁLOGO",
       playingNow: "Vista previa en reproducción",
+      live: "Live",
+      listeningNow: "escuchando ahora",
+      newDrop: "Nuevo lanzamiento",
       stats: [
         { value: "2,4M+", label: "Ingresos de productores" },
         { value: "48K+", label: "Beats vendidos" },

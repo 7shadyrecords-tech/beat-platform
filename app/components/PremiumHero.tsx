@@ -10,7 +10,7 @@ const featuredBeat = beats.reduce((a, b) => ((b.plays ?? 0) > (a.plays ?? 0) ? b
 export function PremiumHero() {
   const { labels } = useLanguage();
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden pt-20">
+    <section className="relative flex min-h-screen items-center overflow-hidden px-0 pb-20 pt-36 sm:pt-40 lg:pt-44">
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
