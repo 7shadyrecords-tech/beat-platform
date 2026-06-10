@@ -5,23 +5,9 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { SectionReveal } from "./ui/SectionReveal";
 import { useLanguage } from "@/app/hooks/useLanguage";
+import { placements } from "@/app/data/placements";
 
 const ACCENT = "#e05c20";
-
-const collabs = [
-  { key: "booba", name: "Booba", tracks: ["Walabok"] },
-  {
-    key: "13block",
-    name: "13 Block",
-    tracks: ["Vrai Negro", "L.K.T.E.B", "Hors la loi", "Vers l'enfer"],
-  },
-  { key: "hds", name: "HDS", tracks: ["Dans la rue"] },
-  { key: "douma-kalash", name: "Douma Kalash", tracks: ["IGO #5"] },
-  { key: "ndx", name: "NDX", tracks: ["Denie Fwa"] },
-  { key: "oldpee", name: "Oldpee", tracks: ["Dur"] },
-  { key: "xelo", name: "XELO", tracks: ["Go Hard", "YIZIMI 2.0"] },
-  { key: "meiji-sai", name: "MEIJI SAI", tracks: ["Vol à l'étalage"] },
-];
 
 export function CollaborationsSection() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -45,7 +31,7 @@ export function CollaborationsSection() {
   };
 
   return (
-    <SectionReveal className="py-20" id="collabs">
+    <SectionReveal className="scroll-mt-32 py-20" id="collabs">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-10 flex items-end justify-between">
@@ -54,8 +40,12 @@ export function CollaborationsSection() {
               {cl.label}
             </p>
             <h2 className="heading-luxury mt-2 text-3xl md:text-4xl">
-              {cl.title}<span className="neon-text">{cl.titleHighlight}</span>
+              {cl.title}
+              <span className="neon-text">{cl.titleHighlight}</span>
             </h2>
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted">
+              {cl.description}
+            </p>
           </div>
 
           {/* Arrow controls */}
@@ -100,53 +90,57 @@ export function CollaborationsSection() {
             className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            {collabs.map((artist, i) => (
-              <motion.div
-                key={artist.key}
-                className="glass-card flex w-[200px] shrink-0 flex-col items-center rounded-2xl px-4 py-6 text-center"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.07, duration: 0.5 }}
-              >
-                {/* Photo */}
-                <div className="relative mb-4 h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-white/10">
-                  <Image
-                    src={`/collabs/${artist.key}.jpg`}
-                    alt={artist.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
+            {placements.map((placement, i) => {
+              const listenUrl = placement.spotifyUrl ?? placement.youtubeUrl;
 
-                {/* Name */}
-                <p className="font-display text-sm font-bold leading-tight text-white">
-                  {artist.name}
-                </p>
-
-                {/* Track counter */}
-                <p
-                  className="mt-1 font-display text-xs font-bold tracking-widest uppercase"
-                  style={{ color: ACCENT }}
+              return (
+                <motion.article
+                  key={placement.id}
+                  className="glass-card w-[240px] shrink-0 overflow-hidden rounded-2xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.07, duration: 0.5 }}
                 >
-                  {artist.tracks.length}{" "}
-                  {artist.tracks.length > 1 ? cl.tracks : cl.track}
-                </p>
-
-                {/* Track list */}
-                <ul className="mt-3 w-full space-y-1">
-                  {artist.tracks.map((t) => (
-                    <li
-                      key={t}
-                      className="truncate text-[11px] text-white/40"
-                      title={t}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={placement.image}
+                      alt={`${placement.title} — ${placement.artist}`}
+                      fill
+                      sizes="240px"
+                      className="object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+                    <span
+                      className="absolute left-3 top-3 rounded-full border border-white/10 bg-black/70 px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest"
+                      style={{ color: ACCENT }}
                     >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
+                      {cl.itemLabel}
+                    </span>
+                  </div>
+
+                  <div className="p-4">
+                    <h3 className="font-display text-base font-bold text-white">
+                      {placement.title}
+                    </h3>
+                    <p className="mt-1 text-xs font-medium uppercase tracking-widest text-white/45">
+                      {placement.artist}
+                    </p>
+
+                    {listenUrl ? (
+                      <a
+                        href={listenUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex min-h-10 items-center rounded-lg border border-white/10 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white transition-colors hover:border-neon/50 hover:text-neon"
+                      >
+                        {cl.listen}
+                      </a>
+                    ) : null}
+                  </div>
+                </motion.article>
+              );
+            })}
           </div>
         </div>
 

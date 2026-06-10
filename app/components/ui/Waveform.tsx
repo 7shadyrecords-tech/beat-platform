@@ -18,10 +18,14 @@ export function Waveform({
 }: WaveformProps) {
   const seeds = useMemo(
     () =>
-      Array.from({ length: bars }, (_, i) => ({
-        h: 0.25 + Math.sin(i * 0.7) * 0.35 + Math.random() * 0.25,
-        delay: i * 0.04,
-      })),
+      Array.from({ length: bars }, (_, i) => {
+        const variation = (((i * 37 + bars * 13) % 17) / 17) * 0.25;
+
+        return {
+          h: Math.max(0.12, 0.25 + Math.sin(i * 0.7) * 0.35 + variation),
+          delay: i * 0.04,
+        };
+      }),
     [bars]
   );
 

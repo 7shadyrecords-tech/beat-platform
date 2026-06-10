@@ -1,13 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/app/hooks/useLanguage";
 
 const nav = [
-  { id: "featured", href: "/#featured" },
-  { id: "trending", href: "/#trending" },
   { id: "catalog", href: "/#catalog" },
-  { id: "analytics", href: "/#analytics" },
   { id: "collabs", href: "/#collabs" },
   { id: "drums", href: "/drums" },
   { id: "vst", href: "/vst" },
@@ -100,14 +98,14 @@ export function PremiumHeader() {
           }`}
         >
           <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <a href="/" className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
               <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-neon to-neon-red neon-glow">
                 <span className="font-display text-xs font-black text-black">ZB</span>
               </div>
               <span className="hidden font-display text-sm font-bold tracking-[0.2em] sm:block">
                 ZewOne <span className="neon-text">Beats</span>
               </span>
-            </a>
+            </Link>
 
             <nav className="hidden items-center gap-8 md:flex">
               {nav.map((link) => (

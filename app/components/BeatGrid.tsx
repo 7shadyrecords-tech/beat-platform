@@ -10,7 +10,7 @@ export function BeatGrid() {
   const c = labels.catalog;
 
   return (
-    <SectionReveal className="relative py-28" id="catalog">
+    <SectionReveal className="relative scroll-mt-32 py-28" id="catalog">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>

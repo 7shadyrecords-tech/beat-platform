@@ -4,7 +4,7 @@ import type React from "react";
 import type { Beat } from "../data/beats";
 import { useCheckout } from "../context/CheckoutContext";
 import { useLanguage } from "@/app/hooks/useLanguage";
-import { formatPriceEUR } from "../data/licenses";
+import { formatPriceEUR, getStartingLicensePrice } from "../data/licenses";
 
 type BuyNowButtonProps = {
   beat: Beat;
@@ -21,9 +21,10 @@ export function BuyNowButton({
 }: BuyNowButtonProps) {
   const { openBuyModal } = useCheckout();
   const { labels } = useLanguage();
+  const startingPrice = getStartingLicensePrice();
 
   const label = showFromPrice
-    ? `${labels.beatCard.buy} — ${formatPriceEUR(29)}`
+    ? `${labels.beatCard.buy} — ${formatPriceEUR(startingPrice)}`
     : labels.beatCard.buyNow;
 
   return (

@@ -48,9 +48,8 @@ export function PremiumFooter() {
             <div>
               <p className="label-mono text-xs sm:text-sm text-neon">{f.platform}</p>
               <ul className="mt-3 sm:mt-4 space-y-2 text-xs sm:text-sm text-muted">
-                <li><a href="#featured" className="hover:text-foreground transition-colors">{f.featured}</a></li>
-                <li><a href="#catalog" className="hover:text-foreground transition-colors">{f.catalog}</a></li>
-                <li><a href="#analytics" className="hover:text-foreground transition-colors">{f.analytics}</a></li>
+                <li><Link href="/#catalog" className="hover:text-foreground transition-colors">{f.catalog}</Link></li>
+                <li><Link href="/#collabs" className="hover:text-foreground transition-colors">{f.placements}</Link></li>
               </ul>
             </div>
 

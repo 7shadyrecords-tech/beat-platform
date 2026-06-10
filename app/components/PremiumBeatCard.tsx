@@ -7,7 +7,7 @@ import { usePlayer } from "../context/PlayerContext";
 import { useLanguage } from "@/app/hooks/useLanguage";
 import { BuyNowButton } from "./BuyNowButton";
 import { Waveform } from "./ui/Waveform";
-import { formatPriceEUR } from "../data/licenses";
+import { formatPriceEUR, getStartingLicensePrice } from "../data/licenses";
 
 type PremiumBeatCardProps = {
   beat: Beat;
@@ -19,6 +19,7 @@ export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
   const { labels } = useLanguage();
   const isActive = currentBeat?.id === beat.id;
   const playing = isActive && isPlaying;
+  const startingPrice = getStartingLicensePrice();
 
   return (
     <motion.article
@@ -90,7 +91,7 @@ export function PremiumBeatCard({ beat, index = 0 }: PremiumBeatCardProps) {
               <p className="text-xs text-muted">{beat.producer}</p>
             </div>
             <span className="font-display text-sm font-bold neon-text">
-              {labels.beatCard.from} {formatPriceEUR(29)}
+              {labels.beatCard.from} {formatPriceEUR(startingPrice)}
             </span>
           </div>
         </div>

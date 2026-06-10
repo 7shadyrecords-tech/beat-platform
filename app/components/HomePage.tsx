@@ -7,14 +7,10 @@ import { LicenseModal } from "./LicenseModal";
 import { AnimatedBackground } from "./ui/AnimatedBackground";
 import { FloatingElements } from "./ui/FloatingElements";
 import { BeatGrid } from "./BeatGrid";
-import { FeaturedBeats } from "./FeaturedBeats";
 import { PremiumAudioPlayer } from "./PremiumAudioPlayer";
 import { PremiumFooter } from "./PremiumFooter";
 import { PremiumHeader } from "./PremiumHeader";
 import { PremiumHero } from "./PremiumHero";
-import { ProducerAnalytics } from "./ProducerAnalytics";
-import { Testimonials } from "./Testimonials";
-import { TrendingCarousel } from "./TrendingCarousel";
 import { CollaborationsSection } from "./CollaborationsSection";
 
 export function HomePage() {
@@ -33,13 +29,7 @@ export function HomePage() {
       >
         <PremiumHero />
         <CollaborationsSection />
-        <FeaturedBeats />
-        <div id="trending">
-          <TrendingCarousel />
-        </div>
-        <ProducerAnalytics />
         <BeatGrid />
-        <Testimonials />
         <PremiumFooter />
       </motion.main>
 

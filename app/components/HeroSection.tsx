@@ -10,7 +10,7 @@ export function HeroSection() {
 
       <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
         <p className="mb-4 font-mono text-xs uppercase tracking-[0.4em] text-neon">
-          // 獣性 — PREDATOR SOUND LAB
+          獣性 — PREDATOR SOUND LAB
         </p>
 
         <h1 className="max-w-4xl font-display text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">

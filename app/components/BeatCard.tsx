@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { Beat } from "../data/beats";
 import { usePlayer } from "../context/PlayerContext";
 import { useLanguage } from "@/app/hooks/useLanguage";
+import { formatPriceEUR, getStartingLicensePrice } from "../data/licenses";
 
 type BeatCardProps = {
   beat: Beat;
@@ -14,6 +15,7 @@ export function BeatCard({ beat }: BeatCardProps) {
   const { labels } = useLanguage();
   const isActive = currentBeat?.id === beat.id;
   const playing = isActive && isPlaying;
+  const startingPrice = getStartingLicensePrice();
 
   return (
     <article className="group relative flex flex-col overflow-hidden border border-border bg-surface transition-all duration-300 hover:border-neon/60 hover:neon-glow">
@@ -55,7 +57,7 @@ export function BeatCard({ beat }: BeatCardProps) {
               <p className="font-mono text-xs text-foreground/70">{beat.producer}</p>
             </div>
             <span className="font-display text-xl font-bold text-neon drop-shadow-[0_0_8px_rgba(255,92,0,0.6)]">
-              ${beat.price}
+              {formatPriceEUR(startingPrice)}
             </span>
           </div>
         </div>

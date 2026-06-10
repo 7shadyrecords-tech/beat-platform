@@ -4,8 +4,9 @@ import { motion } from "framer-motion";
 import { Waveform } from "./ui/Waveform";
 import { useLanguage } from "@/app/hooks/useLanguage";
 import { beats } from "@/app/data/beats";
+import { placementArtists } from "@/app/data/placements";
 
-const featuredBeat = beats.reduce((a, b) => ((b.plays ?? 0) > (a.plays ?? 0) ? b : a), beats[0]);
+const leadBeat = beats[0];
 
 export function PremiumHero() {
   const { labels } = useLanguage();
@@ -47,17 +48,17 @@ export function PremiumHero() {
           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
         >
           <a
-            href="#featured"
+            href="#catalog"
             className="group relative overflow-hidden rounded-full bg-gradient-to-r from-neon via-neon-bright to-neon-red px-6 sm:px-10 py-3 sm:py-4 text-center font-display text-xs sm:text-sm font-bold tracking-widest text-black neon-glow-strong transition-transform hover:scale-[1.02]"
           >
             <span className="relative z-10">{labels.hero.exploreCollection}</span>
             <div className="absolute inset-0 bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
           </a>
           <a
-            href="#catalog"
+            href="#collabs"
             className="glass rounded-full px-6 sm:px-10 py-3 sm:py-4 text-center font-display text-xs sm:text-sm font-bold tracking-widest text-foreground transition-all hover:border-neon/40 hover:text-neon"
           >
-            {labels.hero.viewCatalog}
+            {labels.hero.viewPlacements}
           </a>
         </motion.div>
 
@@ -70,27 +71,23 @@ export function PremiumHero() {
           <div className="flex flex-col gap-4 md:gap-6 md:flex-row md:items-center md:justify-between">
             <div className="min-w-0">
               <p className="label-mono text-xs sm:text-sm text-muted">{labels.hero.playingNow}</p>
-              <p className="mt-2 font-display text-lg sm:text-2xl font-bold truncate">{featuredBeat.title}</p>
-              <p className="text-xs sm:text-sm text-muted truncate">{featuredBeat.producer} · {featuredBeat.bpm} BPM · {featuredBeat.key}</p>
+              <p className="mt-2 font-display text-lg sm:text-2xl font-bold truncate">{leadBeat.title}</p>
+              <p className="text-xs sm:text-sm text-muted truncate">{leadBeat.producer} · {leadBeat.bpm} BPM · {leadBeat.key}</p>
             </div>
             <Waveform active height={48} bars={40} className="md:max-w-md md:flex-1 min-w-0" />
           </div>
         </motion.div>
 
         <motion.div
-          className="mt-10 sm:mt-14 md:mt-16 grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 border-t border-white/5 pt-8 sm:pt-10 md:pt-12 sm:grid-cols-4"
+          className="mt-10 border-t border-white/5 pt-8 sm:mt-14 sm:pt-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.7 }}
         >
-          {labels.hero.stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="font-display text-lg sm:text-2xl md:text-3xl font-bold text-foreground">
-                {stat.value}
-              </p>
-              <p className="label-mono mt-1 text-xs sm:text-sm text-muted">{stat.label}</p>
-            </div>
-          ))}
+          <p className="label-mono text-xs text-neon">{labels.hero.placementProof}</p>
+          <p className="mt-3 max-w-4xl font-display text-lg font-bold leading-relaxed text-foreground/85 sm:text-2xl">
+            {placementArtists.join(" · ")}
+          </p>
         </motion.div>
       </div>
 

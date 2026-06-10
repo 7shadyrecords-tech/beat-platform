@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import {
   currencyOptions,
   defaultLanguage,
@@ -15,19 +15,38 @@ function isLanguageCode(value: unknown): value is LanguageCode {
   return typeof value === "string" && ["fr", "en", "de", "es"].includes(value);
 }
 
+const languageChangeEvent = "bp-language-change";
+
 function getStoredLanguage(): LanguageCode {
-  if (typeof window === "undefined") return defaultLanguage;
   const stored = window.localStorage.getItem(localStorageLanguageKey);
   return isLanguageCode(stored) ? stored : defaultLanguage;
 }
 
+function subscribeToLanguage(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(languageChangeEvent, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(languageChangeEvent, callback);
+  };
+}
+
 export function useLanguage() {
-  const [language, setLanguageState] = useState<LanguageCode>(() => getStoredLanguage());
+  const language = useSyncExternalStore(
+    subscribeToLanguage,
+    getStoredLanguage,
+    () => defaultLanguage
+  );
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   const setLanguage = useCallback((lang: LanguageCode) => {
-    setLanguageState(lang);
     window.localStorage.setItem(localStorageLanguageKey, lang);
-    window.location.reload();
+    document.documentElement.lang = lang;
+    window.dispatchEvent(new Event(languageChangeEvent));
   }, []);
 
   const currentLanguage =

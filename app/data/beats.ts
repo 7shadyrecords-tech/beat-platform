@@ -5,7 +5,6 @@ export type Beat = {
   bpm: number;
   key: string;
   genre: string;
-  price: number;
   previewUrl: string;
   coverImage: string;
   tag: string;
@@ -25,14 +24,10 @@ export const beats: Beat[] = [
     bpm: 110,
     key: "Gm",
     genre: "Trap",
-    price: 49,
     previewUrl: "/beats/audio/preview/ama.mp3",
     coverImage: "/beats/covers/01.jpg",
     tag: "HOT",
     tags: ["Dark", "Melodic", "808"],
-    featured: true,
-    plays: 12400,
-    trending: 1,
     audioFile: "1. AMA (#key G Minor 6A ) BPM110 ZewOneBeats .mp3",
     wavFile: "wav piste/1. AMA (#key G Minor 6A ) BPM110 ZewOneBeats .wav",
   },
@@ -43,14 +38,10 @@ export const beats: Beat[] = [
     bpm: 136,
     key: "A#m",
     genre: "Trap",
-    price: 55,
     previewUrl: "/beats/audio/preview/dgrt.mp3",
     coverImage: "/beats/covers/02.jpg",
     tag: "NEW",
     tags: ["Hard", "Street", "Aggressive"],
-    featured: true,
-    plays: 9800,
-    trending: 2,
     audioFile: "2. DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.mp3",
     wavFile: "wav piste/2. DGRT ( #key A# minor 3A ) BPM136 - ZewOneBeats.wav",
   },
@@ -61,14 +52,10 @@ export const beats: Beat[] = [
     bpm: 135,
     key: "Dm",
     genre: "Trap",
-    price: 59,
     previewUrl: "/beats/audio/preview/dope-machine.mp3",
     coverImage: "/beats/covers/03-dope-machine.jpg",
     tag: "TRENDING",
     tags: ["Energetic", "Club", "Hard"],
-    featured: true,
-    plays: 15200,
-    trending: 3,
     audioFile: "3. dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.mp3",
     wavFile: "wav piste/3. dope machine ( #key D minor 7A ) BPM135 - ZewOneBeats.wav",
   },

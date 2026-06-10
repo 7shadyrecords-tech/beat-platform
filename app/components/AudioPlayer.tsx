@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { usePlayer } from "../context/PlayerContext";
+import { formatPriceEUR, getStartingLicensePrice } from "../data/licenses";
 
 function formatTime(seconds: number) {
   if (!seconds || !isFinite(seconds)) return "0:00";
@@ -25,6 +26,7 @@ export function AudioPlayer() {
   if (!currentBeat) return null;
 
   const progressPercent = duration ? (progress / duration) * 100 : 0;
+  const startingPrice = getStartingLicensePrice();
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-neon/30 bg-surface/95 backdrop-blur-xl neon-glow">
@@ -108,7 +110,7 @@ export function AudioPlayer() {
           href={`#buy-${currentBeat.id}`}
           className="shrink-0 border border-neon bg-neon px-4 py-2 font-display text-[10px] font-bold tracking-widest text-black transition-colors hover:bg-neon-bright sm:text-xs"
         >
-          BUY ${currentBeat.price}
+          BUY {formatPriceEUR(startingPrice)}
         </a>
       </div>
     </div>

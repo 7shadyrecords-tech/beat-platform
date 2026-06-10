@@ -12,6 +12,7 @@ import {
 import type { Beat } from "../data/beats";
 
 const PREVIEW_LIMIT = 30; // seconds
+const DEFAULT_VOLUME = 0.8;
 
 type PlayerContextValue = {
   currentBeat: Beat | null;
@@ -35,12 +36,12 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolumeState] = useState(0.8);
+  const [volume, setVolumeState] = useState(DEFAULT_VOLUME);
   const [previewEnded, setPreviewEnded] = useState(false);
 
   useEffect(() => {
     const audio = new Audio();
-    audio.volume = volume;
+    audio.volume = DEFAULT_VOLUME;
     // Disable native download
     audio.setAttribute("controlsList", "nodownload");
     audioRef.current = audio;

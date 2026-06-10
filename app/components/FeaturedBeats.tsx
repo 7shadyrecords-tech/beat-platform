@@ -7,6 +7,7 @@ import { usePlayer } from "../context/PlayerContext";
 import { useLanguage } from "@/app/hooks/useLanguage";
 import { SectionReveal } from "./ui/SectionReveal";
 import { BuyNowButton } from "./BuyNowButton";
+import { formatPriceEUR, getStartingLicensePrice } from "../data/licenses";
 
 const ORANGE = "#e05c20";
 const CARD_BG = "#111111";
@@ -17,6 +18,7 @@ export function FeaturedBeats() {
   const { labels } = useLanguage();
   const f = labels.featured;
   const bt = labels.beatTags;
+  const startingPrice = getStartingLicensePrice();
 
   const [hero, ...rest] = featuredBeats;
   const heroPlaying = currentBeat?.id === hero?.id && isPlaying;
@@ -103,7 +105,7 @@ export function FeaturedBeats() {
                     className="font-display text-xl font-bold"
                     style={{ color: ORANGE }}
                   >
-                    {labels.beatCard.from} €{hero.price}
+                    {labels.beatCard.from} {formatPriceEUR(startingPrice)}
                   </span>
                   <div className="flex gap-2">
                     <button
@@ -176,7 +178,7 @@ export function FeaturedBeats() {
                       className="font-display text-sm font-bold"
                       style={{ color: ORANGE }}
                     >
-                      {labels.beatCard.from} €{beat.price}
+                      {labels.beatCard.from} {formatPriceEUR(startingPrice)}
                     </span>
                     <BuyNowButton
                       beat={beat}

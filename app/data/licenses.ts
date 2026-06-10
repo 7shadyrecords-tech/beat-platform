@@ -48,6 +48,10 @@ export function getLicense(id: string): License | undefined {
   return licenses.find((l) => l.id === id);
 }
 
+export function getStartingLicensePrice(): number {
+  return Math.min(...licenses.map((license) => license.price));
+}
+
 export function formatPriceEUR(price: number): string {
   return new Intl.NumberFormat("fr-FR", {
     style: "currency",

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { beats } from "@/app/data/beats";
 import { useLanguage } from "@/app/hooks/useLanguage";
 
-const topBeat = beats.reduce((a, b) => ((b.plays ?? 0) > (a.plays ?? 0) ? b : a), beats[0]);
+const newBeat = beats.find((beat) => beat.tag === "NEW") ?? beats[0];
 
 const floats = [
   { top: "15%", left: "8%", size: 6, delay: 0 },
@@ -43,24 +43,13 @@ export function FloatingElements() {
       ))}
 
       <motion.div
-        className="glass absolute right-6 top-40 hidden rounded-2xl px-4 py-3 xl:block"
+        className="glass absolute right-6 top-48 hidden rounded-2xl px-4 py-3 xl:block"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
       >
-        <p className="label-mono text-neon">{labels.hero.live}</p>
-        <p className="mt-1 font-display text-lg font-bold">2.4K</p>
-        <p className="text-xs text-muted">{labels.hero.listeningNow}</p>
-      </motion.div>
-
-      <motion.div
-        className="glass absolute right-6 top-72 hidden rounded-2xl px-4 py-3 xl:block"
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.5, duration: 0.8 }}
-      >
         <p className="label-mono text-muted">{labels.hero.newDrop}</p>
-        <p className="mt-1 text-sm font-semibold">{topBeat.title}</p>
+        <p className="mt-1 text-sm font-semibold">{newBeat.title}</p>
         <div className="mt-2 h-1 w-20 overflow-hidden rounded-full bg-white/10">
           <motion.div
             className="h-full rounded-full bg-gradient-to-r from-neon to-neon-red"
